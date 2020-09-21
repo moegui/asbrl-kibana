@@ -13,7 +13,7 @@
   docker_container:
     name: "kibana"
     hostname: "{{HOSTNAME}}"
-    image: "{{IMAGE}}{{BUILD}}"
+    image: "{{IMAGE}}:{{BUILD}}"
     pull: "true"
     network_mode: host 
     recreate: "yes"
