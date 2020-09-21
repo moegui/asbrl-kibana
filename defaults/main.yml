@@ -1,0 +1,11 @@
+---
+default_user: 'ubuntu'
+HOSTNAME: 'es-kibana'
+ES_HOST: 'http://localhost:9200'
+#ES_USERNAME: 'elastic'
+#ES_PASSWORD: ''
+DOCKER_NETWORK_MODE: "bridge"
+DOCKER_LOG_DRIVER: "json-file"
+DOCKER_LOG_OPTIONS: "{}"
+IMAGE: "docker.elastic.co/kibana/kibana"
+BUILD: "7.9.0"
