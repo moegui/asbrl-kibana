@@ -2,8 +2,8 @@
 default_user: 'ubuntu'
 HOSTNAME: 'es-kibana'
 ES_HOST: 'http://localhost:9200'
-#ES_USERNAME: 'elastic'
-#ES_PASSWORD: ''
+ES_USERNAME: 'elastic'
+ES_PASSWORD: ''
 DOCKER_NETWORK_MODE: "bridge"
 DOCKER_LOG_DRIVER: "json-file"
 DOCKER_LOG_OPTIONS: "{}"

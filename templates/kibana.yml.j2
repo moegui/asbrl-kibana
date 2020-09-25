@@ -1,5 +1,7 @@
 server.name: ${HOSTNAME}
 server.host: "0"
 elasticsearch.hosts: {{ ES_HOST }}
+asticsearch.password: {{ ES_PASSWORD }}
+elasticsearch.username: {{ ES_USERNAME }}
 # For Elasticsearch clusters that are running in containers, this setting changes the Node Listing to display the CPU utilization based on the reported Cgroup statistics. It also adds the calculated Cgroup CPU utilization to the Node Overview page instead of the overall operating system’s CPU utilization. Defaults to false.
 monitoring.ui.container.elasticsearch.enabled: true
