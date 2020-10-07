@@ -1,37 +1,23 @@
 ---
 - name: Create Kibana directory
   file:
-    path: /home/{{default_user}}/kibana/
+    path: /home/{{default_user}}/{{CONTAINER_NAME}}/
     state: directory  
 
 - name: Kibana config file
   template:
     src: kibana.yml.j2
-    dest: /home/{{default_user}}/kibana/kibana.yml    
+    dest: /home/{{default_user}}/{{CONTAINER_NAME}}/kibana.yml    
 
 - name: Kibana
   docker_container:
-    name: "kibana"
+    name: "{{CONTAINER_NAME}}"
     hostname: "{{HOSTNAME}}"
     image: "{{IMAGE}}:{{BUILD}}"
     pull: "true"
-    network_mode: host 
-    recreate: "yes"
-    state: "started"
-    log_driver: "{{DOCKER_LOG_DRIVER}}"
-    log_options: "{{DOCKER_LOG_OPTIONS}}"
-    restart_policy: "unless-stopped"
-    volumes:
-      - /home/{{default_user}}/kibana/kibana.yml:/usr/share/kibana/config/kibana.yml
-  when: DOCKER_NETWORK_MODE == 'host'
-
-- name: Kibana
-  docker_container:
-    name: "kibana"
-    hostname: "{{HOSTNAME}}"
-    image: "{{IMAGE}}:{{BUILD}}"
-    pull: "true"
-    network_mode: bridge 
+    network_mode: "{{DOCKER_NETWORK_MODE}}" 
+    cpu_period: "{{DOCKER_CPU_PERIOD}}"
+    memory: "{{DOCKER_MEMORY}}"
     recreate: "yes"
     state: "started"
     log_driver: "{{DOCKER_LOG_DRIVER}}"
@@ -40,5 +26,6 @@
     published_ports:
      - "0.0.0.0:5601:5601"
     volumes:
-      - /home/{{default_user}}/kibana/kibana.yml:/usr/share/kibana/config/kibana.yml
-  when: DOCKER_NETWORK_MODE == 'bridge'
+      - /home/{{default_user}}/{{CONTAINER_NAME}}/kibana.yml:/usr/share/kibana/config/kibana.yml
+    labels: 
+      "{{ DOCKER_LABELS }}"
