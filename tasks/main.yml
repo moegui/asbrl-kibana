@@ -1,32 +1,34 @@
 ---
 - name: Create Kibana directory
   file:
-    path: /home/{{default_user}}/{{CONTAINER_NAME}}/
-    state: directory  
+    path: /home/{{ default_user }}/{{ CONTAINER_NAME }}/
+    state: directory
+    mode: 0644
 
 - name: Kibana config file
   template:
     src: kibana.yml.j2
-    dest: /home/{{default_user}}/{{CONTAINER_NAME}}/kibana.yml    
+    dest: /home/{{ default_user }}/{{ CONTAINER_NAME }}/kibana.yml
+    mode: 0644
 
 - name: Kibana
   docker_container:
-    name: "{{CONTAINER_NAME}}"
-    hostname: "{{HOSTNAME}}"
-    image: "{{IMAGE}}:{{BUILD}}"
+    name: "{{ CONTAINER_NAME }}"
+    hostname: "{{ HOSTNAME }}"
+    image: "{{ IMAGE }}:{{ BUILD }}"
     pull: "true"
-    network_mode: "{{DOCKER_NETWORK_MODE}}" 
-    cpu_period: "{{DOCKER_CPU_PERIOD}}"
-    cpu_quota: "{{DOCKER_CPU_QUOTA}}"
-    memory: "{{DOCKER_MEMORY}}"
+    network_mode: "{{ DOCKER_NETWORK_MODE }}"
+    cpu_period: "{{ DOCKER_CPU_PERIOD }}"
+    cpu_quota: "{{ DOCKER_CPU_QUOTA }}"
+    memory: "{{ DOCKER_MEMORY }}"
     recreate: "yes"
     state: "started"
-    log_driver: "{{DOCKER_LOG_DRIVER}}"
-    log_options: "{{DOCKER_LOG_OPTIONS}}"
+    log_driver: "{{ DOCKER_LOG_DRIVER }}"
+    log_options: "{{ DOCKER_LOG_OPTIONS }}"
     restart_policy: "unless-stopped"
     published_ports:
      - "0.0.0.0:5601:5601"
     volumes:
-      - /home/{{default_user}}/{{CONTAINER_NAME}}/kibana.yml:/usr/share/kibana/config/kibana.yml
-    labels: 
+      - /home/{{ default_user }}/{{ CONTAINER_NAME }}/kibana.yml:/usr/share/kibana/config/kibana.yml
+    labels:
       "{{ DOCKER_LABELS }}"
